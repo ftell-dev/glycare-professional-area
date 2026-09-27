@@ -119,5 +119,154 @@ grant select on public.profiles to authenticated;
 revoke all on function public.is_valid_cpf(text) from public, anon, authenticated;
 revoke all on function public.create_profile_for_new_user() from public, anon, authenticated;
 
+create table if not exists public.patients (
+  id uuid primary key default gen_random_uuid(),
+  professional_id uuid not null references public.profiles (id) on delete cascade,
+  full_name text not null check (nullif(trim(full_name), '') is not null),
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.glucose_readings (
+  id uuid primary key default gen_random_uuid(),
+  patient_id uuid not null references public.patients (id) on delete cascade,
+  measured_at timestamptz not null,
+  glucose_mg_dl numeric(6, 2) not null check (glucose_mg_dl between 20 and 1000),
+  meal_timing text not null check (meal_timing in ('before', 'after', 'unrelated')),
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.diet_entries (
+  id uuid primary key default gen_random_uuid(),
+  patient_id uuid not null references public.patients (id) on delete cascade,
+  entry_date date not null,
+  notes text not null check (nullif(trim(notes), '') is not null),
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.medications (
+  id uuid primary key default gen_random_uuid(),
+  patient_id uuid not null references public.patients (id) on delete cascade,
+  name text not null check (nullif(trim(name), '') is not null),
+  insulin_type text not null check (insulin_type in ('regular', 'rapid', 'intermediate', 'long', 'other')),
+  dose text not null check (nullif(trim(dose), '') is not null),
+  schedule_period text not null check (schedule_period in ('morning', 'afternoon', 'evening', 'bedtime', 'custom')),
+  schedule_label text not null check (nullif(trim(schedule_label), '') is not null),
+  instructions text not null check (nullif(trim(instructions), '') is not null),
+  risk_warnings text,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists glucose_readings_patient_measured_at_idx
+  on public.glucose_readings (patient_id, measured_at desc);
+create index if not exists diet_entries_patient_entry_date_idx
+  on public.diet_entries (patient_id, entry_date desc);
+create index if not exists medications_patient_created_at_idx
+  on public.medications (patient_id, created_at desc);
+
+alter table public.patients enable row level security;
+alter table public.glucose_readings enable row level security;
+alter table public.diet_entries enable row level security;
+alter table public.medications enable row level security;
+
+drop policy if exists "Professionals can read their patients" on public.patients;
+create policy "Professionals can read their patients"
+  on public.patients for select to authenticated
+  using (
+    professional_id = (select auth.uid())
+    and exists (
+      select 1 from public.profiles
+      where id = (select auth.uid()) and status = 'approved'
+    )
+  );
+
+drop policy if exists "Approved professionals can add patients" on public.patients;
+create policy "Approved professionals can add patients"
+  on public.patients for insert to authenticated
+  with check (
+    professional_id = (select auth.uid())
+    and exists (
+      select 1 from public.profiles
+      where id = (select auth.uid()) and status = 'approved'
+    )
+  );
+
+drop policy if exists "Approved professionals can read patient glucose" on public.glucose_readings;
+create policy "Approved professionals can read patient glucose"
+  on public.glucose_readings for select to authenticated
+  using (exists (
+    select 1 from public.patients
+    where id = patient_id and professional_id = (select auth.uid())
+  ) and exists (
+    select 1 from public.profiles
+    where id = (select auth.uid()) and status = 'approved'
+  ));
+
+drop policy if exists "Approved professionals can add patient glucose" on public.glucose_readings;
+create policy "Approved professionals can add patient glucose"
+  on public.glucose_readings for insert to authenticated
+  with check (
+    exists (
+      select 1 from public.patients
+      where id = patient_id and professional_id = (select auth.uid())
+    )
+    and exists (
+      select 1 from public.profiles
+      where id = (select auth.uid()) and status = 'approved'
+    )
+  );
+
+drop policy if exists "Approved professionals can read patient diet" on public.diet_entries;
+create policy "Approved professionals can read patient diet"
+  on public.diet_entries for select to authenticated
+  using (exists (
+    select 1 from public.patients
+    where id = patient_id and professional_id = (select auth.uid())
+  ) and exists (
+    select 1 from public.profiles
+    where id = (select auth.uid()) and status = 'approved'
+  ));
+
+drop policy if exists "Approved professionals can add patient diet" on public.diet_entries;
+create policy "Approved professionals can add patient diet"
+  on public.diet_entries for insert to authenticated
+  with check (
+    exists (
+      select 1 from public.patients
+      where id = patient_id and professional_id = (select auth.uid())
+    )
+    and exists (
+      select 1 from public.profiles
+      where id = (select auth.uid()) and status = 'approved'
+    )
+  );
+
+drop policy if exists "Approved professionals can read patient medications" on public.medications;
+create policy "Approved professionals can read patient medications"
+  on public.medications for select to authenticated
+  using (exists (
+    select 1 from public.patients
+    where id = patient_id and professional_id = (select auth.uid())
+  ) and exists (
+    select 1 from public.profiles
+    where id = (select auth.uid()) and status = 'approved'
+  ));
+
+drop policy if exists "Approved professionals can add patient medications" on public.medications;
+create policy "Approved professionals can add patient medications"
+  on public.medications for insert to authenticated
+  with check (
+    exists (
+      select 1 from public.patients
+      where id = patient_id and professional_id = (select auth.uid())
+    )
+    and exists (
+      select 1 from public.profiles
+      where id = (select auth.uid()) and status = 'approved'
+    )
+  );
+
+revoke all on public.patients, public.glucose_readings, public.diet_entries, public.medications from anon, authenticated;
+grant select, insert on public.patients, public.glucose_readings, public.diet_entries, public.medications to authenticated;
+
 -- Aprove manualmente pelo SQL Editor do Supabase:
 -- update public.profiles set status = 'approved' where id = '<uuid-do-usuario>';

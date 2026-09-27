@@ -118,6 +118,90 @@ a { color: inherit; }
 .profile-registration strong { font-size: 12px; }
 .profile-registration strong span { color: var(--color-muted); font-weight: 400; }
 .dashboard-note { margin: 19px 2px; color: #77759B; font-size: 11px; line-height: 1.6; }
+.dashboard-alert { margin-top: 17px; }
+.care-layout { display: grid; grid-template-columns: 258px minmax(0, 1fr); gap: 34px; margin-top: 34px; }
+.patient-sidebar { min-width: 0; align-self: start; position: sticky; top: 20px; }
+.patient-sidebar .section-heading { margin-bottom: 15px; }
+.patient-count { color: var(--color-muted); font-size: 11px; }
+.patient-create { padding: 15px; border: 1px solid var(--color-border); border-radius: 13px; background: var(--color-surface); }
+.field-label { display: block; margin-bottom: 10px; color: #E5E2F7; font-size: 12px; font-weight: 600; }
+.inline-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px; }
+.inline-form input { width: 100%; min-width: 0; height: 40px; padding: 0 10px; border: 1px solid var(--color-border); border-radius: 9px; background: var(--color-page); color: var(--color-text); font-size: 11px; }
+.inline-form .button { min-height: 40px; padding: 0 10px; border-radius: 9px; font-size: 11px; }
+.patient-list { display: grid; gap: 4px; margin-top: 14px; }
+.patient-option { min-width: 0; display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid transparent; border-radius: 10px; background: transparent; color: var(--color-muted); text-align: left; cursor: pointer; font-size: 12px; }
+.patient-option:hover, .patient-option.is-selected { border-color: rgba(79, 209, 165, 0.22); background: rgba(79, 209, 165, 0.08); color: var(--color-text); }
+.patient-option > span:nth-child(2) { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+.patient-avatar { width: 30px; height: 30px; flex: 0 0 30px; display: grid; place-items: center; border-radius: 9px; background: rgba(79, 209, 165, 0.12); color: var(--color-green); font-size: 12px; font-weight: 700; }
+.patient-arrow { color: var(--color-muted); font-size: 20px; }
+.patient-workspace { min-width: 0; }
+.patient-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; padding: 0 0 20px; border-bottom: 1px solid var(--color-border); }
+.patient-heading h2 { margin: 8px 0 0; font-size: 23px; }
+.patient-record-label { color: var(--color-muted); font-size: 9px; font-weight: 700; letter-spacing: 0.8px; }
+.data-section { padding: 27px 0; border-bottom: 1px solid var(--color-border); }
+.data-section .section-heading { align-items: center; gap: 14px; margin-bottom: 17px; }
+.data-section .section-heading h3 { margin: 6px 0 0; font-size: 16px; }
+.view-switch { display: inline-flex; padding: 3px; border: 1px solid var(--color-border); border-radius: 9px; background: var(--color-surface); }
+.view-switch button { min-height: 31px; padding: 0 10px; border: 0; border-radius: 6px; background: transparent; color: var(--color-muted); cursor: pointer; font-size: 10px; }
+.view-switch button.is-active { background: var(--color-green); color: #08251C; font-weight: 700; }
+.date-picker { display: inline-flex; align-items: center; gap: 9px; margin: 0 0 12px; color: var(--color-muted); font-size: 11px; }
+.date-picker input { height: 34px; padding: 0 8px; border: 1px solid var(--color-border); border-radius: 8px; background: var(--color-surface); color: var(--color-text); }
+.glucose-chart { position: relative; height: 150px; display: grid; grid-template-columns: 60px minmax(0, 1fr); grid-template-rows: 1fr 22px; padding: 10px 0 0; }
+.glucose-chart svg { width: 100%; height: 100%; overflow: visible; grid-column: 2; grid-row: 1; }
+.chart-scale { display: flex; flex-direction: column; justify-content: space-between; padding: 0 0 0 2px; color: var(--color-muted); font-size: 9px; }
+.chart-gridline { fill: none; stroke: rgba(255,255,255,.09); stroke-width: .5; vector-effect: non-scaling-stroke; }
+.chart-line { fill: none; stroke: var(--color-green); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.chart-point { fill: var(--color-page); stroke: var(--color-green); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.chart-dates { grid-column: 2; display: flex; justify-content: space-between; padding-top: 7px; color: var(--color-muted); font-size: 9px; }
+.chart-empty { min-height: 115px; display: grid; place-items: center; border: 1px dashed var(--color-border); border-radius: 10px; color: var(--color-muted); text-align: center; font-size: 11px; }
+.table-heading { display: flex; align-items: center; justify-content: space-between; margin: 23px 0 9px; }
+.table-heading h4 { margin: 0; font-size: 12px; }
+.table-heading span { color: var(--color-muted); font-size: 10px; }
+.table-scroll { overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
+.data-table th { padding: 9px 8px; border-bottom: 1px solid var(--color-border); color: var(--color-muted); font-size: 9px; font-weight: 600; }
+.data-table td { padding: 11px 8px; border-bottom: 1px solid rgba(255,255,255,.045); color: #E5E2F7; font-size: 10px; }
+.data-table td strong { color: var(--color-text); font-size: 12px; }
+.data-table td small { color: var(--color-muted); font-size: 9px; font-weight: 400; }
+.meal-tag { display: inline-flex; padding: 5px 8px; border-radius: 6px; background: rgba(96,165,250,.11); color: var(--color-blue); font-size: 9px; }
+.meal-after { background: rgba(255,159,107,.1); color: var(--color-orange); }
+.meal-unrelated { background: rgba(255,255,255,.07); color: var(--color-muted); }
+.table-empty { padding: 14px 8px; }
+.entry-form { display: grid; gap: 13px; margin-top: 20px; padding: 16px; border: 1px solid var(--color-border); border-radius: 12px; background: rgba(19,18,46,.55); }
+.form-title { color: var(--color-text); font-size: 12px; font-weight: 700; }
+.entry-form .field { gap: 6px; }
+.entry-form .field > span { color: var(--color-muted); font-size: 10px; }
+.entry-form input, .entry-form select, .entry-form textarea { width: 100%; min-width: 0; min-height: 39px; padding: 9px 10px; border: 1px solid var(--color-border); border-radius: 8px; background: var(--color-page); color: var(--color-text); font-size: 11px; }
+.entry-form textarea { min-height: 75px; resize: vertical; line-height: 1.5; }
+.entry-form input::placeholder, .entry-form textarea::placeholder { color: #77759B; }
+.entry-form .button { justify-self: start; min-height: 39px; border-radius: 9px; font-size: 11px; }
+.button-secondary { border-color: rgba(79,209,165,.24); background: rgba(79,209,165,.1); color: var(--color-green); }
+.button-secondary:hover:not(:disabled) { background: rgba(79,209,165,.16); }
+.glucose-form { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; }
+.glucose-form .form-title { grid-column: 1 / -1; }
+.glucose-form button { grid-column: 1 / -1; }
+.diet-form { grid-template-columns: 150px minmax(0, 1fr) auto; align-items: end; }
+.diet-list { display: grid; gap: 8px; margin-top: 15px; }
+.diet-entry { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,.045); }
+.diet-entry time { color: var(--color-green); font-size: 10px; }
+.diet-entry p { margin: 0; color: #D5D2E8; font-size: 11px; line-height: 1.55; white-space: pre-wrap; }
+.section-symbol { color: var(--color-green); font-size: 17px; }
+.medication-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.medication-item { min-width: 0; padding: 14px; border: 1px solid var(--color-border); border-radius: 10px; background: var(--color-surface); }
+.medication-topline { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.medication-period { color: var(--color-green); font-size: 10px; font-weight: 700; }
+.medication-dose { color: var(--color-muted); font-size: 10px; }
+.medication-item h4 { margin: 13px 0 4px; font-size: 13px; overflow-wrap: anywhere; }
+.medication-type, .medication-schedule { margin: 0; color: var(--color-muted); font-size: 10px; line-height: 1.6; }
+.medication-schedule { margin-top: 7px; color: #E5E2F7; }
+.medication-instructions, .medication-warning { margin-top: 13px; padding-top: 10px; border-top: 1px solid var(--color-border); }
+.medication-instructions strong, .medication-warning strong { font-size: 10px; }
+.medication-instructions p, .medication-warning p { margin: 5px 0 0; color: var(--color-muted); font-size: 10px; line-height: 1.55; white-space: pre-wrap; }
+.medication-warning strong { color: var(--color-orange); }
+.workspace-empty { padding: 45px 25px; border: 1px dashed var(--color-border); border-radius: 12px; }
+.workspace-empty h2 { margin: 11px 0 8px; font-size: 19px; }
+.workspace-empty p, .empty-copy { color: var(--color-muted); font-size: 11px; line-height: 1.6; }
+.patient-sidebar > .empty-copy { padding: 0 8px; }
 .loading-state, .app-loading { color: var(--color-muted); text-align: center; }
 .loading-state { padding: 60px 16px; }
 .app-loading { min-height: 100vh; display: grid; place-items: center; }
@@ -148,12 +232,28 @@ a { color: inherit; }
   .dashboard-content { width: min(100% - 36px, 560px); padding: 42px 0 60px; }
   .dashboard-heading { margin-bottom: 28px; }
   .dashboard-heading h1 { font-size: 27px; }
+  .care-layout { grid-template-columns: 1fr; gap: 25px; }
+  .patient-sidebar { position: static; }
+  .patient-list { display: flex; overflow-x: auto; padding-bottom: 3px; }
+  .patient-option { min-width: 175px; }
+  .glucose-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .diet-form { grid-template-columns: 1fr 1fr; }
+  .diet-form .diet-notes { grid-column: 1 / -1; }
+  .diet-form button { grid-column: 1 / -1; }
   .review-banner { grid-template-columns: 38px minmax(0, 1fr); gap: 14px; padding: 18px; }
   .review-banner > .status-badge { grid-column: 2; justify-self: start; }
   .review-copy h2 { font-size: 15px; }
   .profile-card { flex-wrap: wrap; padding: 18px; }
   .profile-main { flex-basis: calc(100% - 65px); }
   .profile-registration { width: 100%; min-width: 0; margin-top: 2px; padding: 14px 0 0; border-top: 1px solid var(--color-border); border-left: 0; }
+  .patient-heading { align-items: start; }
+  .patient-heading h2 { font-size: 19px; }
+  .patient-record-label { padding-top: 5px; font-size: 8px; }
+  .data-section { padding: 23px 0; }
+  .data-section .section-heading { align-items: flex-start; }
+  .view-switch { flex-direction: column; }
+  .view-switch button { text-align: left; }
+  .medication-list { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 420px) {
@@ -162,4 +262,8 @@ a { color: inherit; }
   .form-stack { gap: 17px; }
   .register-panel .form-stack { gap: 15px; }
   .registration-grid { grid-template-columns: minmax(0, 1fr) 90px; }
+  .glucose-form, .diet-form { grid-template-columns: 1fr; }
+  .glucose-form button, .diet-form button, .diet-form .diet-notes { grid-column: auto; }
+  .inline-form { grid-template-columns: minmax(0, 1fr); }
+  .inline-form .button { justify-self: start; }
 }

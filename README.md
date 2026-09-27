@@ -1,6 +1,6 @@
-# Glycare | Área profissional
+# GlyCare Pro | Área profissional
 
-Painel profissional em React + Vite para cadastro e autenticação de profissionais de saúde, com perfil criado pelo Supabase e liberação manual de acesso.
+Painel profissional em React + Vite para cadastro e autenticação de profissionais de saúde, com acompanhamento de pacientes, curva glicêmica, registros alimentares e orientações de medicamentos no Supabase.
 
 ## Configuração local
 
@@ -10,8 +10,10 @@ Painel profissional em React + Vite para cadastro e autenticação de profission
 4. Em Authentication > URL Configuration, configure a URL local `http://localhost:5173` e o redirecionamento de confirmação de e-mail para `http://localhost:5173/painel`.
 5. Inicie com `npm run dev`.
 
-O cadastro requer confirmação de e-mail se essa opção estiver habilitada no Supabase. Todos os perfis começam como `pending`; um administrador aprova ou recusa o registro pelo SQL Editor. A tabela só concede leitura do próprio perfil a usuários autenticados. Nenhuma política de escrita de perfil é concedida ao cliente.
+O cadastro requer confirmação de e-mail se essa opção estiver habilitada no Supabase. Todos os perfis começam como `pending`; um administrador aprova ou recusa o registro pelo SQL Editor. Após a aprovação, o profissional pode cadastrar pacientes e registrar medições de glicemia, sua relação com refeições, observações da dieta e orientações de medicamentos. A curva e a tabela mostram os últimos 15 dias ou um dia selecionado.
 
 ## Segurança e escopo
 
-O CPF é validado no formulário e novamente no trigger do banco, e é armazenado na tabela privada por RLS. A chave `anon` é a única chave usada no frontend; nunca exponha uma chave `service_role` no cliente. Login por CPF, 2FA e módulos de pacientes/medições não fazem parte desta versão.
+O CPF é validado no formulário e novamente no trigger do banco, e é armazenado na tabela privada por RLS. Pacientes, medições, registros alimentares e medicamentos são isolados por profissional e exigem aprovação ativa. A chave `anon` é a única chave usada no frontend; nunca exponha uma chave `service_role` no cliente.
+
+Os registros são inseridos pelo profissional com base nas informações que recebe do paciente. Esta versão não inclui contas, portal ou compartilhamento de dados diretamente com pacientes, nem alertas automáticos. Se tabelas existentes já tiverem sido criadas a partir de uma versão anterior do schema, aplique as novas definições no SQL Editor do Supabase antes de usar os módulos de acompanhamento.
